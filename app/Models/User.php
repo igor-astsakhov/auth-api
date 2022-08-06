@@ -41,4 +41,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tokenExpires( $objToken = null )
+    {
+        $objToken = $objToken ? $objToken : $this->currentAccessToken();
+        $strExpires = 'never';
+        if ( $objToken && $intSec = config( 'sanctum.expiration' ) )
+            $strExpires = date( 'Y-m-d H:i:s', strtotime( $objToken->created_at ) + $intSec );
+        return $strExpires;
+    }
 }

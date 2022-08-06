@@ -9,6 +9,7 @@ class Request extends BaseRequest
 {
     public function wantsJson(): bool
     {
+        return true;
         return Str::startsWith( $this->path(), 'api/') || parent::wantsJson();
     }
 }
